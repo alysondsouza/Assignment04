@@ -10,6 +10,8 @@ namespace Assignment4.Entities
         [Required]
         [StringLength(100)]
         public string Title { get; set; }
+
+        public User? AssignedTo { get; set; }
         
         public string? Description { get; set; }
         
