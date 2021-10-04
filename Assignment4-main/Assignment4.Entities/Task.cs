@@ -20,4 +20,5 @@ namespace Assignment4.Entities
 
         public ICollection<Tag> Tags { get; set; }
     }
+
 }
