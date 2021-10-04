@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Assignment4.Entities;
+using System.Data.SqlClient;
 using Assignment4;
 
 //.AddUserSecrets<Program>()
@@ -17,16 +18,18 @@ namespace Assignment4
         {
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
+                .AddUserSecrets<Program>()
                 .AddJsonFile("appsettings.json")
                 .Build();
-                var connectionString = "Server=.;Database=KanbanBoard;User Id=sa;Password=250b7387-9046-49e4-a71c-54295dcf6888";
 
-                var optionsBuilder = new DbContextOptionsBuilder<KanbanContext>()
+            var connectionString = configuration.GetConnectionString("MyProgram");
+
+            var optionsBuilder = new DbContextOptionsBuilder<KanbanContext>()
                 .UseSqlServer(connectionString);
 
-            return new KanbanContext(optionsBuilder.Options);
+            return new KanbanContext(optionsBuilder.Options); //See Class KanbanContext >> "options"
         }
-            
+        
 
         /*
         public static void Seed(KanbanContext context)

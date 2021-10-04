@@ -2,8 +2,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Assignment4.Entities
 {
-    public class KanbanContext : DbContext
-    { //Skal extend
+    public class KanbanContext : DbContext //DERIVES
+    { 
         protected void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
@@ -23,13 +23,14 @@ namespace Assignment4.Entities
                 .HasOne(tt => tt.Task)
                 .WithMany(ta => ta.TagTasks)
                 .HasForeignKey(tt => tt.TaskId);
-        }
-        
+        }     
 
-        
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<Task> Tasks { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<TagTask> TagTask { get; set; }
 
-        public DbSet<Tag> tags { get; set; }
-        public DbSet<Task> tasks { get; set; }
-        public DbSet<User> users { get; set; }
+        public KanbanContext(DbContextOptions<KanbanContext> options) : base(options) {}
+
     }
 }
