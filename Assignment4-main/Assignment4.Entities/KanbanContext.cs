@@ -2,8 +2,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Assignment4.Entities
 {
-    public class KanbanContext
-    {
+    public class KanbanContext : DbContext
+    { //Skal extend
         protected void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
@@ -14,6 +14,8 @@ namespace Assignment4.Entities
                     v => (State)State.Parse(typeof(State), v));
         }
         
-//Public DBset indholder tags (liste) (prop)
+        public DbSet<Tag> tags { get; set; }
+        public DbSet<Task> tasks { get; set; }
+        public DbSet<User> users { get; set; }
     }
 }
