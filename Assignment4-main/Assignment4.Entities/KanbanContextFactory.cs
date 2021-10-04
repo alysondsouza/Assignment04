@@ -4,15 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Assignment4.Entities;
+using Assignment4;
 
 namespace Lecture04
 {
     public class KanbanContextFactory : IDesignTimeDbContextFactory<KanbanContext>
     {
 
-
-
-        /*
         public KanbanContext CreateDbContext(string[] args)
         {
             var configuration = new ConfigurationBuilder()
@@ -29,6 +27,7 @@ namespace Lecture04
             return new KanbanContext(optionsBuilder.Options);
         }
 
+        /*
         public static void Seed(KanbanContext context)
         {
             context.Database.ExecuteSqlRaw("DELETE dbo.CharacterPower");
@@ -72,5 +71,6 @@ namespace Lecture04
             context.SaveChanges();
         }
         */
+        
     }
 }

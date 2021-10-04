@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
     <ProjectReference Include="..\Assignment4.Core\Assignment4.Core.csproj" />
@@ -7,6 +7,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>d351b0c3-1959-451c-b341-a965e6d34469</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,11 +17,11 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.10" />
-<<<<<<< HEAD
-=======
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="5.0.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
->>>>>>> d7a867460c405519fdac110afdc651c5158648c9
+    
   </ItemGroup>
 
 </Project>
