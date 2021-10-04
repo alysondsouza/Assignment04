@@ -8,4 +8,3 @@ namespace Assignment4.Entities
             Closed,
             Removed
         };
-}

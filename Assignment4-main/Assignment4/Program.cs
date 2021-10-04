@@ -6,6 +6,7 @@
 //dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL //--version 5.0.10
 
 
+
 //dotnet add package Microsoft.EntityFrameworkCore
 
 //dotnet tool install --global dotnet-ef
