@@ -6,7 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Assignment4.Entities;
 using Assignment4;
 
-namespace Lecture04
+//.AddUserSecrets<Program>()
+
+namespace Assignment4
 {
     public class KanbanContextFactory : IDesignTimeDbContextFactory<KanbanContext>
     {
@@ -15,17 +17,16 @@ namespace Lecture04
         {
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddUserSecrets<Program>()
                 .AddJsonFile("appsettings.json")
                 .Build();
+                var connectionString = "Server=.;Database=KanbanBoard;User Id=sa;Password=250b7387-9046-49e4-a71c-54295dcf6888";
 
-            var connectionString = configuration.GetConnectionString("Comics");
-
-            var optionsBuilder = new DbContextOptionsBuilder<KanbanContext>()
+                var optionsBuilder = new DbContextOptionsBuilder<KanbanContext>()
                 .UseSqlServer(connectionString);
 
             return new KanbanContext(optionsBuilder.Options);
         }
+            
 
         /*
         public static void Seed(KanbanContext context)
