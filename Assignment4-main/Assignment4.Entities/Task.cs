@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 
 namespace Assignment4.Entities
 {
@@ -21,16 +20,6 @@ namespace Assignment4.Entities
         public State MyState { get; set; }
 
         public ICollection<Tag> Tags { get; set; }
-
-        protected void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder
-                .Entity<Task>()
-                .Property(e => e.MyState)
-                .HasConversion(
-                    v => v.ToString(),
-                    v => (State)State.Parse(typeof(State), v));
-        }
 
     }
 
