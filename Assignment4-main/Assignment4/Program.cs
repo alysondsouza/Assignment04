@@ -66,7 +66,7 @@ using Assignment4;
 // dotnet ef database update -s ..\folder\
 
 //dotnet ef migrations add InitialMigration --project Assignment4.Entities --startup-project Assignment4
-//dotnet ef update database --project Assignment4.Entities --startup-project Assignment4
+//dotnet ef database update --project Assignment4.Entities --startup-project Assignment4
 
 namespace Assignment4
 {

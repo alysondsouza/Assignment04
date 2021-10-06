@@ -36,13 +36,16 @@ namespace Assignment4
         
         public static void Seed(KanbanContext context)
         {
+            context.Database.ExecuteSqlRaw("DELETE dbo.Users");
+            context.Database.ExecuteSqlRaw("DELETE dbo.Tags");
+            context.Database.ExecuteSqlRaw("DELETE dbo.Tasks");
+            context.Database.ExecuteSqlRaw("DELETE dbo.TagTask");
             context.Database.ExecuteSqlRaw("DELETE dbo.User");
             context.Database.ExecuteSqlRaw("DELETE dbo.Tag");
             context.Database.ExecuteSqlRaw("DELETE dbo.Task");
-            context.Database.ExecuteSqlRaw("DELETE dbo.TagTask");
-            context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('dbo.User', RESEED, 0)");
-            context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('dbo.Tag', RESEED, 0)");
-            context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('dbo.Task', RESEED, 0)");
+            context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('dbo.Users', RESEED, 0)");
+            context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('dbo.Tags', RESEED, 0)");
+            context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('dbo.Tasks', RESEED, 0)");
 
             var username = new User { Id = 1, Name = "Ali", Email = "ades@itu.dk" };
 
@@ -50,12 +53,11 @@ namespace Assignment4
 
             var Task = new Task { Id = 1, Title = "tasktitle", AssignedTo =  new User { Id = 2, Name = "Mads", Email = "mads@itu.dk" }, Description = "descriptionTask", MyState = State.Active};
             
-            // context.TagTask.AddRange(
-
-            //     //new TagTask {Tag, Task};
-            //     //new Character { GivenName = "Clark", Surname = "Kent", AlterEgo = "Superman", Occupation = "Reporter", City = metropolis, Gender = Male, FirstAppearance = DateTime.Parse("1938-04-18"), Powers = new[] { superStrength, flight, invulnerability, superSpeed, heatVision, freezeBreath, xRayVision, superhumanHearing, healingFactor } },
             
-            // );
+            context.TagTask.AddRange(
+            new Task { Id = 1, Title = "tasktitle", AssignedTo =  new User { Id = 2, Name = "Mads", Email = "mads@itu.dk" }, Description = "descriptionTask", MyState = State.Active}               //new Character { GivenName = "Clark", Surname = "Kent", AlterEgo = "Superman", Occupation = "Reporter", City = metropolis, Gender = Male, FirstAppearance = DateTime.Parse("1938-04-18"), Powers = new[] { superStrength, flight, invulnerability, superSpeed, heatVision, freezeBreath, xRayVision, superhumanHearing, healingFactor } },
+            );
+            
             context.SaveChanges();
         }
     }
