@@ -8,8 +8,6 @@ using Assignment4.Entities;
 using System.Data.SqlClient;
 using Assignment4;
 
-//.AddUserSecrets<Program>()
-
 namespace Assignment4
 {
     public class KanbanContextFactory : IDesignTimeDbContextFactory<KanbanContext>
@@ -20,9 +18,11 @@ namespace Assignment4
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
+                .AddUserSecrets<Program>()
                 .Build();
 
-            var connectionString = "Server=localhost;Database=MyProject;User Id=sa;Password=a1f4d27d-3246-4252-beb7-936e3e9e15d9";
+            var connectionString = "Server=localhost;Database=MyProject;User Id=sa;Password=a1f4d27d-3246-4252-beb7-936e3e9e15d9"; 
+            //var connectionString = configuration.GetConnectionString("MyProject");
 
             var optionsBuilder = new DbContextOptionsBuilder<KanbanContext>()
                 .UseSqlServer(connectionString);
@@ -30,8 +30,7 @@ namespace Assignment4
             return new KanbanContext(optionsBuilder.Options); //See Class KanbanContext >> "options"
         }
         
-        //        .SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location))
-        //                 .AddUserSecrets<Program>()
+        //       .SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location))
 
         
         public static void Seed(KanbanContext context)
@@ -40,26 +39,24 @@ namespace Assignment4
             context.Database.ExecuteSqlRaw("DELETE dbo.Tags");
             context.Database.ExecuteSqlRaw("DELETE dbo.Tasks");
             context.Database.ExecuteSqlRaw("DELETE dbo.TagTask");
-            context.Database.ExecuteSqlRaw("DELETE dbo.User");
-            context.Database.ExecuteSqlRaw("DELETE dbo.Tag");
-            context.Database.ExecuteSqlRaw("DELETE dbo.Task");
             context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('dbo.Users', RESEED, 0)");
             context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('dbo.Tags', RESEED, 0)");
             context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('dbo.Tasks', RESEED, 0)");
 
-            var username = new User { Id = 1, Name = "Ali", Email = "ades@itu.dk" };
+            var ali = new User {Name = "Ali", Email = "ades@itu.dk" };
+            var mads = new User {Name = "Mads", Email = "mads@itu.dk" };
+            var caspar = new User {Name = "Caspar", Email = "caspar@itu.dk" };
 
-            var Tag = new Tag { Id = 1, Name = "tagName" };
+            var Csharp = new Tag {Name = "Csharp" };
+            var Docker = new Tag {Name = "Docker" };
+            var Java = new Tag {Name = "Java" };
 
-            var Task = new Task { Id = 1, Title = "tasktitle", AssignedTo =  new User { Id = 2, Name = "Mads", Email = "mads@itu.dk" }, Description = "descriptionTask", MyState = State.Active};
+            var task1 = new Task {Title = "Programs to Fix", AssignedTo =  ali, Description = "urgent", MyState = State.Active, Tags = new[]{Csharp, Java}};
+            var task2 = new Task {Title = "Debbug", AssignedTo =  mads, Description = "manhana manhana", MyState = State.New, Tags = new[]{Docker}};
             
-            
-            context.TagTask.AddRange(
-            new Task { Id = 1, Title = "tasktitle", AssignedTo =  new User { Id = 2, Name = "Mads", Email = "mads@itu.dk" }, Description = "descriptionTask", MyState = State.Active}               //new Character { GivenName = "Clark", Surname = "Kent", AlterEgo = "Superman", Occupation = "Reporter", City = metropolis, Gender = Male, FirstAppearance = DateTime.Parse("1938-04-18"), Powers = new[] { superStrength, flight, invulnerability, superSpeed, heatVision, freezeBreath, xRayVision, superhumanHearing, healingFactor } },
+            context.Tasks.AddRange(
+                task1, task2
             );
-            
-            context.SaveChanges();
         }
     }
-
 }

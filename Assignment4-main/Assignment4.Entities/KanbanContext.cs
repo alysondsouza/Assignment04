@@ -12,6 +12,15 @@ namespace Assignment4.Entities
                 .HasConversion(
                     v => v.ToString(),
                     v => (State)State.Parse(typeof(State), v));
+        }     
+        public KanbanContext(DbContextOptions<KanbanContext> options) : base(options) {}
+
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<Task> Tasks { get; set; }
+        public DbSet<User> Users { get; set; }
+    }
+}
+
 
             // modelBuilder.Entity<TagTask>()
             //     .HasKey(tt => new { tt.TagId, tt.TaskId });  
@@ -23,14 +32,3 @@ namespace Assignment4.Entities
             //     .HasOne(tt => tt.Task)
             //     .WithMany(ta => ta.TagTasks)
             //     .HasForeignKey(tt => tt.TaskId);
-        }     
-        public KanbanContext(DbContextOptions<KanbanContext> options) : base(options) {}
-
-        public DbSet<Tag> Tags { get; set; }
-        public DbSet<Task> Tasks { get; set; }
-        public DbSet<User> Users { get; set; }
-        //public DbSet<TagTask> TagTask { get; set; }
-
-
-    }
-}

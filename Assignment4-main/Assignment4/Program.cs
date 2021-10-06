@@ -61,10 +61,9 @@ using Assignment4;
 
 //MIGRATION
 //dotnet ef migrations add InitialCreate
-// dotnet ef migrations add Initial -s .\file.csproj //output: Folder:Migration
+//dotnet ef migrations add Initial -s .\file.csproj //output: Folder:Migration
 //dotnet ef database update
-// dotnet ef database update -s ..\folder\
-
+//dotnet ef database update -s ..\folder\
 //dotnet ef migrations add InitialMigration --project Assignment4.Entities --startup-project Assignment4
 //dotnet ef database update --project Assignment4.Entities --startup-project Assignment4
 
@@ -84,18 +83,21 @@ namespace Assignment4
 
         static void Main(string[] args)
         {
-
             var configuration = LoadConfiguration();
-            var connectionString = "Server=localhost;Database=MyProject;User Id=sa;Password=a1f4d27d-3246-4252-beb7-936e3e9e15d9";//configuration.GetConnectionString("MyProgram");
-            //var optionsBuilder = new DbContextOptionsBuilder<KanbanContext>().UseNpgsql(connectionString);
-            var optionsBuilder = new DbContextOptionsBuilder<KanbanContext>().UseSqlite(connectionString);
-            using var context = new KanbanContext(optionsBuilder.Options);
-
-            //using var connection = new SqlConnection(connectionString);
-
+            var connectionString = "Server=localhost;Database=MyProject;User Id=sa;Password=a1f4d27d-3246-4252-beb7-936e3e9e15d9";
             //var connectionString = "Server=localhost;Database=$database;User Id=sa;Password=$password"; //(retrieve password)
+            //var connectionString = configuration.GetConnectionString("MyProject");
+            //using var connection = new SqlConnection(connectionString);
+            var optionsBuilder = new DbContextOptionsBuilder<KanbanContext>().UseSqlite(connectionString);
+            //var optionsBuilder = new DbContextOptionsBuilder<KanbanContext>().UseNpgsql(connectionString);
+            using var context = new KanbanContext(optionsBuilder.Options);
+            KanbanContextFactory.Seed(context);
             //new KanbanContextFactory.Seed(Context);
-            
+        }
+    }
+}
+
+
             //connection.Open();
             /*QUERY
             var cmdTxt = "SELECT * FROM table WHERE Name = @name";
@@ -111,8 +113,3 @@ namespace Assignment4
                 Console.WriteLine(character);
             */
             //connection.Close();
-
-        }
-
-    }
-}
