@@ -11,12 +11,17 @@ using Assignment4.Entities;
 using System;
 using System.IO;
 using System.Linq;
+using Assignment4;
 
 //DOCKER
 //docker pull mcr.microsoft.com/mssql/server:2019-latest
 
-//$ConfirmPreference
+//AZURE DATA STUDIO
+//https://docs.microsoft.com/en-us/sql/azure-data-studio/download-azure-data-studio?view=sql-server-ver15
+
+//CONNECTION STRING
 //$connectionString
+//$ConfirmPreference
 
 //PASSWORD
 //$password = New-Guid  (generate)
@@ -60,6 +65,9 @@ using System.Linq;
 //dotnet ef database update
 // dotnet ef database update -s ..\folder\
 
+//dotnet ef migrations add InitialMigration --project Assignment4.Entities --startup-project Assignment4
+//dotnet ef update database --project Assignment4.Entities --startup-project Assignment4
+
 namespace Assignment4
 {
     class Program
@@ -78,9 +86,9 @@ namespace Assignment4
         {
 
             var configuration = LoadConfiguration();
-            var connectionString = configuration.GetConnectionString("MyProgram");
-            var optionsBuilder = new DbContextOptionsBuilder<KanbanContext>().UseNpgsql(connectionString);
-            //var optionsBuilder = new DbContextOptionsBuilder<KanbanContext>().UseSqlite(connectionString);
+            var connectionString = "Server=localhost;Database=MyProject;User Id=sa;Password=a1f4d27d-3246-4252-beb7-936e3e9e15d9";//configuration.GetConnectionString("MyProgram");
+            //var optionsBuilder = new DbContextOptionsBuilder<KanbanContext>().UseNpgsql(connectionString);
+            var optionsBuilder = new DbContextOptionsBuilder<KanbanContext>().UseSqlite(connectionString);
             using var context = new KanbanContext(optionsBuilder.Options);
 
             //using var connection = new SqlConnection(connectionString);

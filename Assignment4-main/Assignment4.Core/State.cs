@@ -1,6 +1,11 @@
 namespace Assignment4.Core
 {
-    public enum State
-    {
-    }
+    public enum State 
+        { 
+            New,
+            Active,
+            Resolved,
+            Closed,
+            Removed
+        };
 }

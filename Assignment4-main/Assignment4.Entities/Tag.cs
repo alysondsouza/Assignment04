@@ -9,7 +9,7 @@ namespace Assignment4.Entities
         [StringLength(50)]
         public string Name { get; set; }
 
-        public ICollection<TagTask> TagTasks { get; set; }
+        public IEnumerable<Task> Tasks { get; set; }
     }
 
 }

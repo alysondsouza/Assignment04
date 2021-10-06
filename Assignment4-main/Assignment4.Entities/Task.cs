@@ -18,7 +18,7 @@ namespace Assignment4.Entities
         [Required]
         public State MyState { get; set; }
 
-        public ICollection<TagTask> TagTasks { get; set; }
+        public IEnumerable<Tag> Tags { get; set; }
     }
 
 }
