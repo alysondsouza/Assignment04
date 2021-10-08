@@ -1,5 +1,5 @@
 using System;
-//using Xunit;
+using Xunit;
 
 namespace Assignment4.Entities.Tests
 {
