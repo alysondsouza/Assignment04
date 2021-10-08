@@ -33,6 +33,7 @@ using Assignment4;
 //docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=$password" -p 1433:1433 -d mcr.microsoft.com/mssql/server:2019-latest
 //$database = "MyProject"
 //$connectionString = "Server=localhost;Database=$database;User Id=sa;Password=$password"
+//$connectionString
 
 //PACKEGE MANAGER
 //www.nuget.org >> packages >> Search: SQL >> System.Data.SqlClient >> .NET CLI
@@ -67,6 +68,15 @@ using Assignment4;
 //dotnet ef migrations add InitialMigration --project Assignment4.Entities --startup-project Assignment4
 //dotnet ef database update --project Assignment4.Entities --startup-project Assignment4
 
+// AZURE  
+// CREATE DATABASE MyProject;
+// DROP DATABASE MyProject;
+// DROP TABLE dbo.TagTask
+// DROP TABLE dbo.Tags
+// DROP TABLE dbo.Tasks
+// DROP TABLE dbo.Users
+// DROP TABLE dbo.__EFMigrationsHistory;
+
 namespace Assignment4
 {
     class Program
@@ -84,7 +94,7 @@ namespace Assignment4
         static void Main(string[] args)
         {
             var configuration = LoadConfiguration();
-            var connectionString = "Server=localhost;Database=MyProject;User Id=sa;Password=a1f4d27d-3246-4252-beb7-936e3e9e15d9";
+            var connectionString = "Server=localhost;Database=MyProject;User Id=sa;Password=fcda4066-2cc0-494a-a438-21d2617fc4fe";
             //var connectionString = "Server=localhost;Database=$database;User Id=sa;Password=$password"; //(retrieve password)
             //var connectionString = configuration.GetConnectionString("MyProject");
             //using var connection = new SqlConnection(connectionString);
