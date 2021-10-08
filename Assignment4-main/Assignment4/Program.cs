@@ -44,7 +44,7 @@ using Assignment4;
 //$ConfirmPreference
 //$connectionString (get)
 //$connectionString = "Server=localhost;Database=MyProject;User Id=sa;Password=3c311304-bb2e-461d-aa5e-0ed3c29894ea" (copy paste)
-//dotnet user-secrets set "ConnectionStrings:MyProgram" "$connectionString"
+//dotnet user-secrets set "ConnectionStrings:MyProject" "$connectionString" 
 //dotnet add package Microsoft.Extensions.Configuration.Json
 //dotnet add package Microsoft.Extensions.Configuration.UserSecrets
 //dotnet user-secrets list
