@@ -94,15 +94,14 @@ namespace Assignment4
         static void Main(string[] args)
         {
             var configuration = LoadConfiguration();
-            var connectionString = "Server=localhost;Database=MyProject;User Id=sa;Password=37d6661e-6894-4944-88fc-e07256e30c81";
+            //var connectionString = "Server=localhost;Database=MyProject;User Id=sa;Password=37d6661e-6894-4944-88fc-e07256e30c81";
             //var connectionString = "Server=localhost;Database=$database;User Id=sa;Password=$password"; //(retrieve password)
-            //var connectionString = configuration.GetConnectionString("MyProject");
+            var connectionString = configuration.GetConnectionString("MyProject");
             //using var connection = new SqlConnection(connectionString);
             var optionsBuilder = new DbContextOptionsBuilder<KanbanContext>().UseSqlServer(connectionString);
-            //var optionsBuilder = new DbContextOptionsBuilder<KanbanContext>().UseNpgsql(connectionString);
+            //var optionsBuilder = new DbContextOptionsBuilder<KanbanContext>().UseNpgsql(connectionString); //POSTGRES
             using var context = new KanbanContext(optionsBuilder.Options);
             KanbanContextFactory.Seed(context);
-            //new KanbanContextFactory.Seed(Context);
         }
     }
 }

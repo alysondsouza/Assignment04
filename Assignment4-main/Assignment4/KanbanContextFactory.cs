@@ -21,8 +21,8 @@ namespace Assignment4
                 .AddUserSecrets<Program>()
                 .Build();
 
-            var connectionString = @"Server=localhost;Database=MyProject;User Id=sa;Password=37d6661e-6894-4944-88fc-e07256e30c81"; 
-            //var connectionString = configuration.GetConnectionString("MyProject");
+            //var connectionString = @"Server=localhost;Database=MyProject;User Id=sa;Password=37d6661e-6894-4944-88fc-e07256e30c81"; 
+            var connectionString = configuration.GetConnectionString("MyProject");
 
             var optionsBuilder = new DbContextOptionsBuilder<KanbanContext>()
                 .UseSqlServer(connectionString);
