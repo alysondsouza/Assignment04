@@ -21,7 +21,7 @@ namespace Assignment4
                 .AddUserSecrets<Program>()
                 .Build();
 
-            var connectionString = "Server=localhost;Database=MyProject;User Id=sa;Password=fcda4066-2cc0-494a-a438-21d2617fc4fe"; 
+            var connectionString = @"Server=localhost;Database=MyProject;User Id=sa;Password=37d6661e-6894-4944-88fc-e07256e30c81"; 
             //var connectionString = configuration.GetConnectionString("MyProject");
 
             var optionsBuilder = new DbContextOptionsBuilder<KanbanContext>()
@@ -35,14 +35,6 @@ namespace Assignment4
         
         public static void Seed(KanbanContext context)
         {
-            context.Database.ExecuteSqlRaw("DELETE dbo.Users");
-            context.Database.ExecuteSqlRaw("DELETE dbo.Tags");
-            context.Database.ExecuteSqlRaw("DELETE dbo.Tasks");
-            context.Database.ExecuteSqlRaw("DELETE dbo.TagTask");
-            context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('dbo.Users', RESEED, 0)");
-            context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('dbo.Tags', RESEED, 0)");
-            context.Database.ExecuteSqlRaw("DBCC CHECKIDENT ('dbo.Tasks', RESEED, 0)");
-
             var ali = new User {Name = "Ali", Email = "ades@itu.dk" };
             var mads = new User {Name = "Mads", Email = "mads@itu.dk" };
             var caspar = new User {Name = "Caspar", Email = "caspar@itu.dk" };
@@ -57,6 +49,7 @@ namespace Assignment4
             context.Tasks.AddRange(
                 task1, task2
             );
+            context.SaveChanges();
         }
     }
 }
