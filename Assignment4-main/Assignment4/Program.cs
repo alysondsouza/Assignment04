@@ -21,10 +21,13 @@ using Assignment4;
 //docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=$password" -p 1433:1433 -d mcr.microsoft.com/mssql/server:2019-latest
 //$database = "MyProject"
 //$connectionString = "Server=localhost;Database=$database;User Id=sa;Password=$password"
+//cd .\Assignment4\
 //dotnet user-secrets init
 //dotnet user-secrets set "ConnectionStrings:MyProject" "$connectionString"
 /*open Azure*/
 /*use the secret connectionString as 'localhost' and select project 'master'*/
+//cd ..
+//dotnet ef migrations add InitialMigration --project Assignment4.Entities --startup-project Assignment4
 //dotnet ef database update --project Assignment4.Entities --startup-project Assignment4
 //cd .\Assignment4\
 //dotnet run
