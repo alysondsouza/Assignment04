@@ -13,6 +13,22 @@ using System.IO;
 using System.Linq;
 using Assignment4;
 
+
+//DEN ULTIMATIVE MIGRATION COMMAD SEQUENCE: DOCKER & AZURE
+/*from Assignment4:*/
+/*open docker*/
+//$password = New-Guid
+//docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=$password" -p 1433:1433 -d mcr.microsoft.com/mssql/server:2019-latest
+//$database = "MyProject"
+//$connectionString = "Server=localhost;Database=$database;User Id=sa;Password=$password"
+//dotnet user-secrets init
+//dotnet user-secrets set "ConnectionStrings:MyProject" "$connectionString"
+/*open Azure*/
+/*use the secret connectionString as 'localhost' and select project 'master'*/
+//dotnet ef database update --project Assignment4.Entities --startup-project Assignment4
+//cd .\Assignment4\
+//dotnet run
+
 //DOCKER
 //docker pull mcr.microsoft.com/mssql/server:2019-latest
 
@@ -21,11 +37,10 @@ using Assignment4;
 
 //CONNECTION STRING
 //$connectionString
-//$ConfirmPreference
 
 //PASSWORD
-//$password = New-Guid  (generate)
-//$password (retrieve)
+//$password = New-Guid  (to generate)
+//$password (to retrieve)
 //$password.Guid | Set-Clipboard (set password to clipboard)
 
 //RUN SQL SERVER CONTAINER: DOCKER
@@ -67,15 +82,6 @@ using Assignment4;
 //dotnet ef database update -s ..\folder\
 //dotnet ef migrations add InitialMigration --project Assignment4.Entities --startup-project Assignment4
 //dotnet ef database update --project Assignment4.Entities --startup-project Assignment4
-
-// AZURE  
-// CREATE DATABASE MyProject;
-// DROP DATABASE MyProject;
-// DROP TABLE dbo.TagTask
-// DROP TABLE dbo.Tags
-// DROP TABLE dbo.Tasks
-// DROP TABLE dbo.Users
-// DROP TABLE dbo.__EFMigrationsHistory;
 
 namespace Assignment4
 {
