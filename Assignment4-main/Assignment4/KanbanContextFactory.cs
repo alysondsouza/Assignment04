@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Assignment4.Entities;
 using System.Data.SqlClient;
-using Assignment4;
+using Assignment4.Core;
 
 namespace Assignment4
 {
@@ -46,7 +46,7 @@ namespace Assignment4
             var task1 = new Task {Title = "Programs to Fix", AssignedTo =  ali, Description = "urgent", MyState = State.Active, Tags = new[]{Csharp, Java}};
             var task2 = new Task {Title = "Debbug", AssignedTo =  mads, Description = "manhana manhana", MyState = State.New, Tags = new[]{Docker}};
             
-            context.Tasks.AddRange(
+            context.tasks.AddRange(
                 task1, task2
             );
             context.SaveChanges();
