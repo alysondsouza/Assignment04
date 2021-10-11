@@ -46,6 +46,7 @@ namespace Assignment4.Entities
 
             var temp2 = new List<TaskDTO>();
 
+            //this has a terrible runtime. Ask TA
             foreach (var task in temp)
             {
                 foreach (var t in task.Tags)
@@ -85,9 +86,14 @@ namespace Assignment4.Entities
         }
         public Response Update(TaskUpdateDTO task)
         {
-            /* _context.tasks.Select(y =>)
-            _context.tasks.Remove(temp.ToList()[0]); */
-            throw new NotImplementedException();
+            //?? maybe?? idk
+            //Havent written tests for this
+            var temp = from _task in _context.tasks
+                       where _task.Id == task.Id
+                       select _task;
+            temp.ToArray()[0].MyState = task.State;
+            return Response.Updated;
+
 
         }
         public Response Delete(int taskId)
