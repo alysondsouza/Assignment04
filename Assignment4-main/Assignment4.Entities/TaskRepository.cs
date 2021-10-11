@@ -13,10 +13,15 @@ namespace Assignment4.Entities
         {
             _context = context;
         }
+
         public (Response Response, int TaskId) Create(TaskCreateDTO task)
         {
+            //BR_2.4 DateTime
+
+            //BR_2.4
             return (Response.Created, (int)task.AssignedToId);
         }
+
         public IReadOnlyCollection<TaskDTO> ReadAll()
         {
             var temp = _context.tasks
@@ -39,6 +44,7 @@ namespace Assignment4.Entities
                        select new TaskDTO(task.Id, task.Title, task.AssignedTo.Name, task.Tags.Select(y => y.Name).ToArray(), task.MyState);
             return temp.ToList();
         }
+
         public IReadOnlyCollection<TaskDTO> ReadAllByTag(string tag)
         {
             var temp = from task in _context.tasks
@@ -60,6 +66,7 @@ namespace Assignment4.Entities
             }
             return temp2;
         }
+
         public IReadOnlyCollection<TaskDTO> ReadAllByUser(int userId)
         {
             var temp = from task in _context.tasks
@@ -68,6 +75,7 @@ namespace Assignment4.Entities
 
             return temp.ToList();
         }
+
         public IReadOnlyCollection<TaskDTO> ReadAllByState(State state)
         {
             var temp = from task in _context.tasks
@@ -82,28 +90,53 @@ namespace Assignment4.Entities
             var temp = from task in _context.tasks
                        where task.Id == taskId
                        select new TaskDetailsDTO(task.Id, task.Title, task.Description, new DateTime(), task.AssignedTo.Name, task.Tags.Select(y => y.Name).ToArray(), task.MyState, new DateTime());
-            return temp.ToList()[0];
+
+            //BR_1.5
+            if (temp == null) return null;
+
+            //BR_1.5
+            return temp.SingleOrDefault();
         }
+
         public Response Update(TaskUpdateDTO task)
         {
             var entity = _context.tasks.Find(task.Id);
 
+            //BR_1.1
             if (entity == null) return Response.NotFound;
 
             entity.MyState = task.State;
             return Response.Updated;
-
-
         }
+
         public Response Delete(int taskId)
         {
             var entity = _context.tasks.Find(taskId);
 
+            //BR_1.1
             if (entity == null) return Response.NotFound;
-            
-            _context.tasks.Remove(entity);
-            _context.SaveChanges();
-            return Response.Deleted;
+
+            //BR_2.1, 2.2, 2.3
+            switch (entity.MyState){
+                case State.New:
+                    _context.tasks.Remove(entity);
+                    _context.SaveChanges();
+                        return Response.Deleted;
+                    break;
+                case State.Active:
+                    entity.MyState = State.Removed;
+                    _context.SaveChanges();
+                        return Response.Updated;
+                    break;
+                case State.Resolved:
+                case State.Closed:
+                case State.Removed:
+                    return Response.Conflict;   
+                    break;
+                default:
+                    return Response.BadRequest;
+                    break;
+            }
         }
     }
 }

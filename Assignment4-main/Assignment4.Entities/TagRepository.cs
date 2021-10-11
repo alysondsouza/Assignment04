@@ -18,24 +18,31 @@ namespace Assignment4.Entities
         {
             return (Response.Created, tag.Id);
         }
+
         public IReadOnlyCollection<TagDTO> ReadAll()
         {
             var temp = _context.tags.Select(i => new TagDTO(i.Id, i.Name));
 
             return temp.ToArray();
         }
+
         public TagDTO Read(int tagId)
         {
-            var temp = from tag in _context.tags
+            var temp = (from tag in _context.tags
                        where tag.Id == tagId
-                       select new TagDTO(tag.Id, tag.Name);
+                       select new TagDTO(tag.Id, tag.Name));
+            //BR_1.5
+            if (temp == null) return null;
 
-            return temp.ToArray()[0];
+            //BR_1.5
+            return temp.SingleOrDefault();
         }
+
         public Response Update(TagUpdateDTO tag)
         {
              var entity = _context.tags.Find(tag.Id);
 
+            //BR_1.1
             if (entity == null) return Response.NotFound;
 
             entity.Name = tag.Name;
@@ -47,6 +54,7 @@ namespace Assignment4.Entities
         {
             var entity = _context.tags.Find(tagId);
 
+            //BR_1.1
             if (entity == null) return Response.NotFound;
             
             _context.tags.Remove(entity);
