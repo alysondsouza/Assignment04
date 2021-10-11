@@ -34,11 +34,24 @@ namespace Assignment4.Entities
         }
         public Response Update(UserUpdateDTO user)
         {
-            throw new NotImplementedException();
+            var entity = _context.tasks.Find(user.Id);
+
+            if (entity == null) return Response.NotFound;
+
+            entity.Name = user.Name;
+
+            return Response.Updated;
         }
+
         public Response Delete(int userId, bool force = false)
         {
-            throw new NotImplementedException();
+            var entity = _context.tasks.Find(userId);
+
+            if (entity == null) return Response.NotFound;
+            
+            _context.tasks.Remove(entity);
+            _context.SaveChanges();
+            return Response.Deleted;
         }
 
     }

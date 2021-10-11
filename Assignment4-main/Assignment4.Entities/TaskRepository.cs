@@ -86,19 +86,24 @@ namespace Assignment4.Entities
         }
         public Response Update(TaskUpdateDTO task)
         {
-            //?? maybe?? idk
-            //Havent written tests for this
-            var temp = from _task in _context.tasks
-                       where _task.Id == task.Id
-                       select _task;
-            temp.ToArray()[0].MyState = task.State;
+            var entity = _context.tasks.Find(task.Id);
+
+            if (entity == null) return Response.NotFound;
+
+            entity.MyState = task.State;
+
             return Response.Updated;
-
-
+            
         }
         public Response Delete(int taskId)
         {
-            throw new NotImplementedException();
+            var entity = _context.tasks.Find(taskId);
+
+            if (entity == null) return Response.NotFound;
+            
+            _context.tasks.Remove(entity);
+            _context.SaveChanges();
+            return Response.Deleted;
         }
     }
 }

@@ -23,6 +23,8 @@ namespace Assignment4.Core
     public record UserUpdateDTO : UserCreateDTO
     {
         public int Id { get; init; }
+
+        public string Name { get; init; }
     }
 
 }
