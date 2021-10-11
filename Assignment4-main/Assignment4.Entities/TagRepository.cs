@@ -35,8 +35,12 @@ namespace Assignment4.Entities
         }
         public Response Update(TagUpdateDTO tag)
         {
-            //This is probably 99% wrong. Don't know how it works. Ask TA
-            _context.Update(tag);
+            var entity = _context.tasks.Find(tag.Id);
+
+            if (entity == null) return Response.NotFound;
+
+            entity.Name = task.Name;
+
             return Response.Updated;
         }
 
