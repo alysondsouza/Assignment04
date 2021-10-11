@@ -10,6 +10,10 @@ namespace Assignment4.Core
         [StringLength(50)]
         public string Name { get; init; }
 
+        [Required]
+        public int Id { get; init; }
+
+
         [EmailAddress]
         [Required]
         [StringLength(50)]
@@ -20,4 +24,5 @@ namespace Assignment4.Core
     {
         public int Id { get; init; }
     }
+
 }

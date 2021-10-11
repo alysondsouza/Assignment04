@@ -1,9 +1,13 @@
 using Microsoft.EntityFrameworkCore;
+using Assignment4.Core;
 
 namespace Assignment4.Entities
 {
-    public class KanbanContext : DbContext //DERIVES
-    { 
+    public class KanbanContext : DbContext
+    { //Skal extend
+
+        public KanbanContext(DbContextOptions<KanbanContext> options) : base(options) { }
+
         protected void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
@@ -12,12 +16,19 @@ namespace Assignment4.Entities
                 .HasConversion(
                     v => v.ToString(),
                     v => (State)State.Parse(typeof(State), v));
-        }     
-        public KanbanContext(DbContextOptions<KanbanContext> options) : base(options) {}
+            
+            //Don't really know if this is necessary, ask TA
+            modelBuilder
+                .Entity<Tag>().Property(e => e.Id);
+                
+        }
 
-        public DbSet<Tag> Tags { get; set; }
-        public DbSet<Task> Tasks { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<Tag> tags { get; set; }
+        public DbSet<Task> tasks { get; set; }
+        public DbSet<User> users { get; set; }
+
+        
+
     }
 }
 
