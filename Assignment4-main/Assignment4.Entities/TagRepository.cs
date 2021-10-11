@@ -33,16 +33,28 @@ namespace Assignment4.Entities
 
             return temp.ToArray()[0];
         }
+
         public Response Update(TagUpdateDTO tag)
         {
-            //This is probably 99% wrong. Don't know how it works. Ask TA
-            _context.Update(tag);
+            var entity = _context.tags.Find(tag.Name);
+            if (_context.tags.Find(tag.Name) != null)
+            {
+                return Response.BadRequest;
+            }
+            entity.Name = tag.Name;
+            _context.SaveChanges();
             return Response.Updated;
         }
 
         public Response Delete(int tagId, bool force = false)
         {
-            throw new NotImplementedException();
+            var entity = _context.tags.Find(tagId);
+
+            if (entity == null) return Response.NotFound;
+            
+            _context.tags.Remove(entity);
+            _context.SaveChanges();
+            return Response.Deleted;
         }
 
     }
