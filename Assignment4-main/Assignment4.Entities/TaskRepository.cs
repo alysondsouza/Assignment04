@@ -91,9 +91,9 @@ namespace Assignment4.Entities
             if (entity == null) return Response.NotFound;
 
             entity.MyState = task.State;
-
             return Response.Updated;
-            
+
+
         }
         public Response Delete(int taskId)
         {
