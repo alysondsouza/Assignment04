@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,13 +34,11 @@ namespace Assignment4.Entities
         }
         public Response Update(TagUpdateDTO tag)
         {
-            
-            var entity = _context.tasks.Find(tag.Id);
+             var entity = _context.tags.Find(tag.Id);
 
-            //BR_1.1
             if (entity == null) return Response.NotFound;
 
-            entity.Name = task.Name;
+            entity.Name = tag.Name;
 
             return Response.Updated;
         }
@@ -50,7 +47,6 @@ namespace Assignment4.Entities
         {
             var entity = _context.tags.Find(tagId);
 
-            //BR_1.1
             if (entity == null) return Response.NotFound;
             
             _context.tags.Remove(entity);
