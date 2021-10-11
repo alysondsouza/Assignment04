@@ -94,5 +94,24 @@ namespace Assignment4.Entities.Tests
         //     Assert.Equal(Response.Updated, output);
         // }
 
+
+        [Fact]
+        public void Tag_Delete_returns_Response_given_Id()
+        {
+            var repository = new TagRepository(_context);
+            
+            //confirm tags in db
+            var arrayTags = repository.ReadAll();
+            Assert.Equal(7, arrayTags.Count);
+            _context.SaveChanges();
+
+            //delete tag
+            var answer = repository.Delete(7);
+            var finalArray = repository.ReadAll();
+            Assert.Equal(6, finalArray.Count);
+
+            Assert.Equal(Response.Deleted, answer);
+        }
+        
     }
 }

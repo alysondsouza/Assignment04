@@ -42,7 +42,13 @@ namespace Assignment4.Entities
 
         public Response Delete(int tagId, bool force = false)
         {
-            throw new NotImplementedException();
+            var entity = _context.tags.Find(tagId);
+
+            if (entity == null) return Response.NotFound;
+            
+            _context.tags.Remove(entity);
+            _context.SaveChanges();
+            return Response.Deleted;
         }
 
     }
