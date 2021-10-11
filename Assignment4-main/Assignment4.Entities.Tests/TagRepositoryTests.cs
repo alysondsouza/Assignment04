@@ -86,13 +86,13 @@ namespace Assignment4.Entities.Tests
 
         }
 
-        // [Fact]
-        // public void Tag_Update_returns_responseUpdated()
-        // {
+        [Fact]
+        public void Tag_Update_returns_responseUpdated()
+        {
             
-        //     var output = _repository.Update(new TagUpdateDTO());
-        //     Assert.Equal(Response.Updated, output);
-        // }
+            var output = _repository.Update(new TagUpdateDTO());
+            Assert.Equal(Response.Updated, output);
+        }
 
 
         [Fact]
@@ -112,6 +112,6 @@ namespace Assignment4.Entities.Tests
 
             Assert.Equal(Response.Deleted, answer);
         }
-        
+
     }
 }
