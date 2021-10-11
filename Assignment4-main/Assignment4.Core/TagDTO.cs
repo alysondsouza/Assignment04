@@ -6,6 +6,7 @@ namespace Assignment4.Core
 
     public record TagCreateDTO
     {
+
         //TagRepository.Create was meant to return an Id using a TagCreateDTO, so added an Id field
         [Required]
         public int Id;
@@ -13,6 +14,7 @@ namespace Assignment4.Core
         [Required]
         [StringLength(50)]
         public string Name { get; init; }
+
 
     }
 

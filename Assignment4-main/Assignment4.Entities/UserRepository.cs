@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +40,6 @@ namespace Assignment4.Entities
         {
             throw new NotImplementedException();
         }
-
 
     }
 }

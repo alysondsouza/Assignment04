@@ -1,14 +1,17 @@
 using System;
+
 using Assignment4.Core;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+
 using Xunit;
 
 namespace Assignment4.Entities.Tests
 {
     public class UserRepositoryTests
     {
+
         private readonly KanbanContext _context;
         private readonly UserRepository _repository;
         public UserRepositoryTests()
@@ -87,5 +90,6 @@ namespace Assignment4.Entities.Tests
             Assert.Equal(expected3, output3);
             Assert.Equal(expected4, output4);
         }
+
     }
 }
