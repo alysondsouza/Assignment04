@@ -91,6 +91,7 @@ namespace Assignment4.Entities
             if (entity == null) return Response.NotFound;
 
             entity.MyState = task.State;
+            _context.SaveChanges();
             return Response.Updated;
 
 
@@ -100,7 +101,7 @@ namespace Assignment4.Entities
             var entity = _context.tasks.Find(taskId);
 
             if (entity == null) return Response.NotFound;
-            
+
             _context.tasks.Remove(entity);
             _context.SaveChanges();
             return Response.Deleted;

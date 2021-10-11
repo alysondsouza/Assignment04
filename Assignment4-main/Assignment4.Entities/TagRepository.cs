@@ -34,11 +34,12 @@ namespace Assignment4.Entities
         }
         public Response Update(TagUpdateDTO tag)
         {
-             var entity = _context.tags.Find(tag.Id);
+            var entity = _context.tags.Find(tag.Id);
 
             if (entity == null) return Response.NotFound;
 
             entity.Name = tag.Name;
+            _context.SaveChanges();
 
             return Response.Updated;
         }
@@ -48,7 +49,7 @@ namespace Assignment4.Entities
             var entity = _context.tags.Find(tagId);
 
             if (entity == null) return Response.NotFound;
-            
+
             _context.tags.Remove(entity);
             _context.SaveChanges();
             return Response.Deleted;
