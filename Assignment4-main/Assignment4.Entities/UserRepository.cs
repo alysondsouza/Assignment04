@@ -17,7 +17,7 @@ namespace Assignment4.Entities
 
         public (Response Response, int UserId) Create(UserCreateDTO user)
         {
-            return (Response.Created, user.Id);    
+            return (Response.Created, user.Id);
         }
         public IReadOnlyCollection<UserDTO> ReadAll()
         {
@@ -28,8 +28,8 @@ namespace Assignment4.Entities
         public UserDTO Read(int userId)
         {
             var temp = from user in _context.users
-                        where user.Id == userId
-                        select new UserDTO(user.Id, user.Name, user.Email);
+                       where user.Id == userId
+                       select new UserDTO(user.Id, user.Name, user.Email);
             return temp.ToArray()[0];
         }
         public Response Update(UserUpdateDTO user)
@@ -39,6 +39,7 @@ namespace Assignment4.Entities
             if (entity == null) return Response.NotFound;
 
             entity.Name = user.Name;
+            _context.SaveChanges();
 
             return Response.Updated;
         }
@@ -48,7 +49,7 @@ namespace Assignment4.Entities
             var entity = _context.users.Find(userId);
 
             if (entity == null) return Response.NotFound;
-            
+
             _context.users.Remove(entity);
             _context.SaveChanges();
             return Response.Deleted;

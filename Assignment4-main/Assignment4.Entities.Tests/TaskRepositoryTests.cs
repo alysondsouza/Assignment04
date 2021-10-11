@@ -226,6 +226,32 @@ namespace Assignment4.Entities.Tests
 
         }
 
+        [Fact]
+        public void Task_Update_changes_State_of_task()
+        {
+            var repository = new TaskRepository(_context);
+            Assert.Equal(State.Active, repository.Read(3).State);
+            var updateDTO = new TaskUpdateDTO { Id = 3, State = State.Closed};
+            var resp = repository.Update(updateDTO);
+            Assert.Equal(Response.Updated, resp);
+            Assert.Equal(State.Closed, repository.Read(3).State);
+
+        }
+
+        [Fact]
+        public void Task_Delete_returns_Response_given_Id()
+        {
+            var repository = new TaskRepository(_context);
+
+            var arrayTags = repository.ReadAll();
+            Assert.Equal(4, arrayTags.Count);
+            var answer = repository.Delete(3);
+
+            var finalArray = repository.ReadAll();
+            Assert.Equal(3, finalArray.Count);
+
+            Assert.Equal(Response.Deleted, answer);
+        }
 
     }
 }

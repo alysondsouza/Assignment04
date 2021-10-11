@@ -86,20 +86,24 @@ namespace Assignment4.Entities.Tests
 
         }
 
-        // [Fact]
-        // public void Tag_Update_returns_responseUpdated()
-        // {
-            
-        //     var output = _repository.Update(new TagUpdateDTO());
-        //     Assert.Equal(Response.Updated, output);
-        // }
+        [Fact]
+        public void Tag_Update_changes_name_of_tag()
+        {
+            var repository = new TagRepository(_context);
+            Assert.Equal("Tag number 2", repository.Read(2).Name);
+            var updateDTO = new TagUpdateDTO { Id = 2, Name = "This tag has been changed" };
+            var resp = repository.Update(updateDTO);
+            Assert.Equal(Response.Updated, resp);
+            Assert.Equal("This tag has been changed", repository.Read(2).Name);
+
+        }
 
 
         [Fact]
         public void Tag_Delete_returns_Response_given_Id()
         {
             var repository = new TagRepository(_context);
-            
+
             //confirm tags in db
             var arrayTags = repository.ReadAll();
             Assert.Equal(7, arrayTags.Count);
@@ -112,6 +116,9 @@ namespace Assignment4.Entities.Tests
 
             Assert.Equal(Response.Deleted, answer);
         }
-        
+
+
+
+
     }
 }
