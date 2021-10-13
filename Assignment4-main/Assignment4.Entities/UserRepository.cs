@@ -26,6 +26,7 @@ namespace Assignment4.Entities
                 return (Response.Created, user.Id);
             } else 
             return (Response.Conflict, user.Id);    
+
         }
         
         public IReadOnlyCollection<UserDTO> ReadAll()
@@ -46,6 +47,8 @@ namespace Assignment4.Entities
 
             //BR_1.5
             return temp.SingleOrDefault();  
+
+ 
         }
 
         public Response Update(UserUpdateDTO user)
@@ -56,6 +59,7 @@ namespace Assignment4.Entities
             if (entity == null) return Response.NotFound;
 
             entity.Name = user.Name;
+            _context.SaveChanges();
 
             return Response.Updated;
         }
@@ -71,7 +75,6 @@ namespace Assignment4.Entities
             {
                 if (entity.Tasks.Count() > 0) return Response.Conflict;
             }
-            
             _context.users.Remove(entity);
             _context.SaveChanges();
             return Response.Deleted;

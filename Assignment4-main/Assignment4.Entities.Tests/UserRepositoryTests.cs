@@ -91,5 +91,33 @@ namespace Assignment4.Entities.Tests
             Assert.Equal(expected4, output4);
         }
 
+
+        [Fact]
+        public void User_Update_changes_Name_of_user()
+        {
+            var repository = new UserRepository(_context);
+            Assert.Equal("User5", repository.Read(5).Name);
+            var updateDTO = new UserUpdateDTO { Id = 3, Name = "Bob Hansen"};
+            var resp = repository.Update(updateDTO);
+            Assert.Equal(Response.Updated, resp);
+            Assert.Equal("Bob Hansen", repository.Read(3).Name);
+
+        }
+
+        [Fact]
+        public void User_Delete_returns_Response_given_Id()
+        {
+            var repository = new UserRepository(_context);
+
+            var arrayTags = repository.ReadAll();
+            Assert.Equal(6, arrayTags.Count);
+            var answer = repository.Delete(4);
+
+            var finalArray = repository.ReadAll();
+            Assert.Equal(5, finalArray.Count);
+
+            Assert.Equal(Response.Deleted, answer);
+        }
+
     }
 }
