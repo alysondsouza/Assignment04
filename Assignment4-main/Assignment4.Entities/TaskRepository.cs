@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using Assignment4.Core;
 using System.Linq;
@@ -84,6 +86,7 @@ namespace Assignment4.Entities
                        select new TaskDetailsDTO(task.Id, task.Title, task.Description, new DateTime(), task.AssignedTo.Name, task.Tags.Select(y => y.Name).ToArray(), task.MyState, new DateTime());
             return temp.ToList()[0];
         }
+        /*
         public Response Update(TaskUpdateDTO task)
         {
             var entity = _context.tasks.Find(task.Id);
@@ -91,16 +94,40 @@ namespace Assignment4.Entities
             if (entity == null) return Response.NotFound;
 
             entity.MyState = task.State;
+            _context.SaveChanges();
             return Response.Updated;
-
-
         }
+        */
+
+        public Response Update(TaskUpdateDTO task)
+        {
+            var entity = _context.tasks.Find(task.Id);
+
+            if (entity == null) return Response.NotFound;
+            entity.Title = task.Title;
+            
+            var tempUser = _context.users.SingleOrDefault(u => u.Id == task.AssignedToId);
+            if (tempUser == null) {
+                return Response.BadRequest;
+            }
+
+            entity.Description = task.Description;
+            if (task.Tags != null)
+            {
+                entity.Tags = _context.tags.Where(t => task.Tags.Contains(t.Name)).ToList();
+            }
+            entity.MyState = task.State;
+            _context.SaveChanges();
+            return Response.Updated;
+        }
+
+
         public Response Delete(int taskId)
         {
             var entity = _context.tasks.Find(taskId);
 
             if (entity == null) return Response.NotFound;
-            
+
             _context.tasks.Remove(entity);
             _context.SaveChanges();
             return Response.Deleted;

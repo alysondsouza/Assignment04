@@ -87,31 +87,92 @@ namespace Assignment4.Entities.Tests
         }
 
         [Fact]
-        public void Tag_Update_returns_responseUpdated()
+        public void Tag_Update_changes_name_of_tag()
         {
-            
-            var output = _repository.Update(new TagUpdateDTO());
-            Assert.Equal(Response.Updated, output);
+            var repository = new TagRepository(_context);
+            Assert.Equal("Tag number 2", repository.Read(2).Name);
+            var updateDTO = new TagUpdateDTO { Id = 2, Name = "This tag has been changed" };
+            var resp = repository.Update(updateDTO);
+            Assert.Equal(Response.Updated, resp);
+            Assert.Equal("This tag has been changed", repository.Read(2).Name);
+
         }
 
-
+        
         [Fact]
         public void Tag_Delete_returns_Response_given_Id()
         {
             var repository = new TagRepository(_context);
-            
+
             //confirm tags in db
             var arrayTags = repository.ReadAll();
             Assert.Equal(7, arrayTags.Count);
             _context.SaveChanges();
 
             //delete tag
-            var answer = repository.Delete(7);
+            var answer = repository.Delete(7, false);
             var finalArray = repository.ReadAll();
             Assert.Equal(6, finalArray.Count);
 
             Assert.Equal(Response.Deleted, answer);
         }
+
+        [Fact]
+        public void Deleting_Tag_without_Force_returns_conflict()
+        {
+            var context = _context;
+            var tag = new Tag
+            {
+                Id = 8,
+                Name = "Tag number 8",
+                Tasks = new[]
+            {
+                new Task
+                {
+                    Id = 1,
+                    Title = "First task",
+                    AssignedTo = null,
+                    Description = "This task needs to be done",
+                    MyState = State.New,
+                },
+                new Task
+                {
+                    Id = 2,
+                    Title = "Second task",
+                    AssignedTo = null,
+                    Description = "This task needs to be done quickly",
+                    MyState = State.Removed,
+                }
+            }
+            };
+
+            context.Add(tag);
+
+            context.SaveChanges();
+            var repository = new TagRepository(context);
+            Assert.Equal(Response.Conflict, repository.Delete(8, false));
+
+            Assert.Equal(Response.Deleted, repository.Delete(8, true));
+
+
+        }
+
+        [Fact]
+        public void Creating_Tag_that_exists_returns_conflict()
+        {
+            var repo = new TagRepository(_context);
+            var outputConflict = repo.Create(new TagCreateDTO { Id = 1, Name = "Name shouldn't matter" });
+
+            Assert.Equal((Response.Conflict, 1), outputConflict);
+
+            Assert.Equal(7, repo.ReadAll().Count);
+            var outputSucceeded = repo.Create(new TagCreateDTO { Id = 19, Name = "Name shouldn't matter" });
+            Assert.Equal(8, repo.ReadAll().Count);
+            Assert.Equal((Response.Created, 19), outputSucceeded);
+        }
+
+
+
 
     }
 }
