@@ -31,18 +31,24 @@ namespace Assignment4.Entities
 
             return temp.ToArray();
         }
+
         public TagDTO Read(int tagId)
         {
-            var temp = from tag in _context.tags
+            var temp = (from tag in _context.tags
                        where tag.Id == tagId
-                       select new TagDTO(tag.Id, tag.Name);
+                       select new TagDTO(tag.Id, tag.Name));
+            //BR_1.5
+            if (temp == null) return null;
 
-            return temp.ToArray()[0];
+            //BR_1.5
+            return temp.SingleOrDefault();
         }
+
         public Response Update(TagUpdateDTO tag)
         {
             var entity = _context.tags.Find(tag.Id);
 
+            //BR_1.1
             if (entity == null) return Response.NotFound;
 
             entity.Name = tag.Name;
@@ -53,8 +59,10 @@ namespace Assignment4.Entities
 
         public Response Delete(int tagId, bool force)
         {
+            //BR_1.1
 
             var entity = _context.tags.Find(tagId);
+
             if (entity == null) return Response.NotFound;
             if (force == false && (entity.Tasks != null)) {
                 if (entity.Tasks.Count() > 0) return Response.Conflict;

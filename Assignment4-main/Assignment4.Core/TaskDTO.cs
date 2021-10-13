@@ -11,6 +11,8 @@ namespace Assignment4.Core
     public record TaskCreateDTO
     {
         [Required]
+        public int Id;
+        [Required]
         [StringLength(100)]
         public string Title { get; init; }
 

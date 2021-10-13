@@ -17,7 +17,17 @@ namespace Assignment4.Entities
         }
         public (Response Response, int TaskId) Create(TaskCreateDTO task)
         {
-            return (Response.Created, (int)task.AssignedToId);
+            var entity = _context.tasks.Find(task.Id);
+            if (entity != null) return (Response.Conflict, task.Id);
+
+            var tempUser = _context.users.SingleOrDefault(u => u.Id == task.AssignedToId);
+            if (tempUser == null) return (Response.BadRequest, task.Id);
+
+            var tags = _context.tags.Where(t => task.Tags.Contains(t.Name)).ToList();
+
+            _context.tasks.Add(new Task { Id = task.Id, Title = task.Title, AssignedTo = tempUser, Description = task.Description, MyState = State.New, Tags = tags });
+            _context.SaveChanges();
+            return (Response.Created, task.Id);
         }
         public IReadOnlyCollection<TaskDTO> ReadAll()
         {
@@ -92,7 +102,6 @@ namespace Assignment4.Entities
             var entity = _context.tasks.Find(task.Id);
 
             if (entity == null) return Response.NotFound;
-
             entity.MyState = task.State;
             _context.SaveChanges();
             return Response.Updated;
