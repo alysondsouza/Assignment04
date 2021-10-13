@@ -86,7 +86,7 @@ namespace Assignment4.Entities.Tests
 
         }
 
-        [Fact]
+
         public void Tag_Update_changes_name_of_tag()
         {
             var repository = new TagRepository(_context);
@@ -95,7 +95,6 @@ namespace Assignment4.Entities.Tests
             var resp = repository.Update(updateDTO);
             Assert.Equal(Response.Updated, resp);
             Assert.Equal("This tag has been changed", repository.Read(2).Name);
-
         }
 
 
@@ -116,6 +115,7 @@ namespace Assignment4.Entities.Tests
 
             Assert.Equal(Response.Deleted, answer);
         }
+
 
         [Fact]
         public void Deleting_Tag_without_Force_returns_conflict()
@@ -170,8 +170,6 @@ namespace Assignment4.Entities.Tests
             Assert.Equal(8, repo.ReadAll().Count);
             Assert.Equal((Response.Created, 19), outputSucceeded);
         }
-
-
 
 
     }

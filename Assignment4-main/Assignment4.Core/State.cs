@@ -6,6 +6,8 @@
         Active,
         Resolved,
         Closed,
-        Removed
+        Removed,
+        Created,
+        StateUpdated
     }
 }
